@@ -1,4 +1,5 @@
 import { Dispatch } from "react";
+import { User } from "./api.types";
 
 // 1. Column definition
 export interface Column {
@@ -103,6 +104,24 @@ export interface DataGridRowProps {
   handleEdit: (row: RowData) => void;
   handleDelete: (id: string | number) => void;
   loading?: boolean;
+}
+export interface ColumnManagerProps {
+  columns: Column[];
+  state: DataGridState;
+  dispatch: Dispatch<GridAction>;
+  gridData: User[];
+  sortModel: SortModel[];
+  pinnedOffsets: {
+    left: { [key: string]: number };
+    right: { [key: string]: number };
+  };
+  dragOverCol: string | null;
+  setDraggedCol: (key: string | null) => void;
+  setDragOverCol: (key: string | null) => void;
+  startResizing: (e: React.MouseEvent, key: string) => void;
+  isResizing: React.MutableRefObject<boolean>;
+  handleSort: (key: string, shiftKey: boolean) => void;
+  handleColumnDrop: () => void;
 }
 
 

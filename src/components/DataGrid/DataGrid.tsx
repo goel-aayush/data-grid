@@ -12,6 +12,7 @@ import { Button } from "../ui/Button";
 import { RowData, SortModel } from "@/types/grid.types";
 import { usePersistGridState } from "@/hooks/useLocalStorage";
 import FilterPanel from "./FilterPanel";
+import { User } from "@/types/api.types";
 
 export default function DataGrid() {
   usePersistGridState();
@@ -140,7 +141,7 @@ export default function DataGrid() {
 
     const selectedData = gridData.filter((row) =>
       state.selectedRows.includes(row.id)
-    );
+    ) as User[];
 
     exportToCsv(
       selectedData,
