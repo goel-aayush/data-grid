@@ -9,7 +9,7 @@ import DataGridHeader from "./DataGridHeader";
 import DataGridRow from "./DataGridRow";
 import Pagination from "./Pagination";
 import { Button } from "../ui/Button";
-import { RowData } from "@/types/grid.types";
+import { RowData, SortModel } from "@/types/grid.types";
 import { usePersistGridState } from "@/hooks/useLocalStorage";
 import FilterPanel from "./FilterPanel";
 
@@ -58,24 +58,24 @@ export default function DataGrid() {
 
   const handleSort = (key: string, shiftKey: boolean) => {
     const existing = sortModel.find((s) => s.key === key);
-    let newSortModel;
+    let newSortModel: SortModel[];
 
     if (existing) {
-      const next =
-        existing.direction === "asc"
-          ? "desc"
-          : existing.direction === "desc"
-          ? null
-          : "asc";
-
-      if (next) {
+      // Toggle: asc → desc → remove
+      if (existing.direction === "asc") {
         newSortModel = shiftKey
           ? sortModel.map((s) =>
-              s.key === key ? { ...s, direction: next } : s
+              s.key === key ? { ...s, direction: "desc" } : s
             )
-          : [{ key, direction: next }];
-      } else {
+          : [{ key, direction: "desc" }];
+      } else if (existing.direction === "desc") {
+        // Remove this sort
         newSortModel = shiftKey ? sortModel.filter((s) => s.key !== key) : [];
+      } else {
+        // Fallback
+        newSortModel = shiftKey
+          ? [...sortModel, { key, direction: "asc" }]
+          : [{ key, direction: "asc" }];
       }
     } else {
       newSortModel = shiftKey

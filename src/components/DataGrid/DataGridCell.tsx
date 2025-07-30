@@ -136,7 +136,7 @@ export default function DataGridCell({
       ) : column.key === "avatar" && typeof row[column.key] === "string" ? (
         <div className="w-8 h-8 relative">
           <Image
-            src={row[column.key]}
+            src={String(row[column.key] || "")}
             alt="Avatar"
             fill
             sizes="32px"
