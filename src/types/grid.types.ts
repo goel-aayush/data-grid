@@ -1,5 +1,4 @@
 import { Dispatch } from "react";
-import { User } from "./api.types";
 
 // 1. Column definition
 export interface Column {
@@ -107,9 +106,9 @@ export interface DataGridRowProps {
 }
 export interface ColumnManagerProps {
   columns: Column[];
-  state: DataGridState;
+  state: GridState;
   dispatch: Dispatch<GridAction>;
-  gridData: User[];
+  gridData: RowData[];
   sortModel: SortModel[];
   pinnedOffsets: {
     left: { [key: string]: number };
